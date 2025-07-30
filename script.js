@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Contact form handling with EmailJS integration
 (function() {
-    // EmailJS configuration - your actual credentials
     const PUBLIC_KEY = 'XfOpKs_5UOFNf0lJ-';
     const SERVICE_ID = 'service_awqdokh'; 
     const TEMPLATE_ID = 'template_24798wj';
@@ -232,10 +231,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         from_email: email,
                         subject: subject,
                         message: message,
-                        to_email: 'ethenbiju@gmail.com'
                     };
                     
+                    console.log('Sending EmailJS params:', templateParams);
                     const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                    console.log('EmailJS response:', response);
                     
                     if (response.status === 200) {
                         showStatus('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
