@@ -180,16 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Contact form handling with secure EmailJS integration
+// Contact form handling with EmailJS integration
 (function() {
-    // EmailJS configuration - these will be loaded from environment or config
-    let emailConfig = null;
+    // EmailJS configuration - your actual credentials
+    const PUBLIC_KEY = 'XfOpKs_5UOFNf0lJ-';
+    const SERVICE_ID = 'service_awqdokh'; 
+    const TEMPLATE_ID = 'template_24798wj';
     
-    // Try to load EmailJS config from environment (for deployment)
-    // This allows you to set these as environment variables in your hosting platform
-    if (typeof window !== 'undefined' && window.EMAIL_CONFIG) {
-        emailConfig = window.EMAIL_CONFIG;
-        emailjs.init(emailConfig.publicKey);
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(PUBLIC_KEY);
     }
     
     const contactForm = document.getElementById('contact-form');
@@ -225,17 +225,17 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus('Sending your message...', 'info');
             
             try {
-                // Try EmailJS first if configured
-                if (emailConfig && typeof emailjs !== 'undefined') {
+                // Try EmailJS first
+                if (typeof emailjs !== 'undefined') {
                     const templateParams = {
                         from_name: name,
                         from_email: email,
                         subject: subject,
                         message: message,
-                        to_email: 'ethenbiju@gmail.com' // Your email
+                        to_email: 'ethenbiju@gmail.com'
                     };
                     
-                    const response = await emailjs.send(emailConfig.serviceId, emailConfig.templateId, templateParams);
+                    const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
                     
                     if (response.status === 200) {
                         showStatus('Thank you! Your message has been sent successfully. I\'ll get back to you soon!', 'success');
@@ -244,16 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         throw new Error('EmailJS failed');
                     }
                 } else {
-                    // Fallback to mailto
-                    const mailtoLink = `mailto:ethenbiju@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-                    window.location.href = mailtoLink;
-                    
-                    showStatus('Your email client should open now. If not, please email me directly at ethenbiju@gmail.com', 'info');
-                    
-                    // Show additional instructions
-                    setTimeout(() => {
-                        showStatus('Email client opened! If you prefer, you can also reach me directly at ethenbiju@gmail.com or call +91 8921642057', 'success');
-                    }, 2000);
+                    throw new Error('EmailJS not loaded');
                 }
                 
             } catch (error) {
@@ -263,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const mailtoLink = `mailto:ethenbiju@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
                 window.location.href = mailtoLink;
                 
-                showStatus('Opening your email client as backup. You can also reach me at ethenbiju@gmail.com or +91 8921642057', 'info');
+                showStatus('EmailJS unavailable. Opening your email client as backup. You can also reach me at ethenbiju@gmail.com or +91 8921642057', 'info');
             } finally {
                 setLoading(false);
             }

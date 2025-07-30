@@ -88,18 +88,15 @@ dist/
 ehthumbs.db
 Thumbs.db
 
-# EmailJS Configuration (KEEP PRIVATE)
-email-config.js
-config.js
-
 # Any other sensitive configuration files
 secrets/
 private/
 *.secret
 *.key
-*.pem
+*.pem 
 
-#instructions
-CONTACT_SETUP.md  
-README.md 
+CONTACT_SETUP.md 
+DEPLOYMENT_GUIDE.md
+README.md
+
 
