@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Contact form handling with EmailJS integration
 (function() {
-    // EmailJS configuration - your actual credentials
     const PUBLIC_KEY = 'XfOpKs_5UOFNf0lJ-';
     const SERVICE_ID = 'service_awqdokh'; 
     const TEMPLATE_ID = 'template_24798wj';
